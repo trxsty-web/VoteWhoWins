@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>Voting Platform</title>
 
+<!-- Fancy font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
@@ -30,20 +33,25 @@ h1 {
   background: rgba(0,0,0,0.4);
   padding: 30px;
   border-radius: 20px;
-  width: 220px;
+  width: 240px;
   box-shadow: 0 0 15px rgba(255,215,0,0.3);
 }
 
+/* FANCY NAME STYLE */
 .name {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
 }
 
+/* VOTE DISPLAY ABOVE BUTTON */
 .votes {
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 15px;
   color: gold;
+  font-weight: bold;
 }
 
 button {
@@ -109,7 +117,7 @@ let votes = {
 
 let cooldowns = {};
 
-function updateUI(name) {
+function updateVotes(name) {
   document.getElementById("votes-" + name).innerText =
     "Votes: " + votes[name];
 }
@@ -119,7 +127,8 @@ function vote(name, button) {
   if (cooldowns[name]) return;
 
   votes[name]++;
-  updateUI(name);
+
+  updateVotes(name);
 
   console.log("VOTES:", votes);
 
