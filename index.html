@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Voting Platform</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0b3d2e, #1a1f2b, #b08d00);
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 30px;
+  font-size: 40px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: rgba(0,0,0,0.4);
+  padding: 30px;
+  border-radius: 20px;
+  width: 220px;
+  box-shadow: 0 0 15px rgba(255,215,0,0.3);
+}
+
+.name {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: gold;
+  color: black;
+  font-weight: bold;
+}
+
+button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.cooldown {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Voting Platform</h1>
+<p>Vote for your favorite candidate</p>
+
+<div class="container">
+
+  <div class="card">
+    <div class="name">Demy</div>
+    <button onclick="vote('Demy', this)">Vote</button>
+    <div class="cooldown"></div>
+  </div>
+
+  <div class="card">
+    <div class="name">Keishana</div>
+    <button onclick="vote('Keishana', this)">Vote</button>
+    <div class="cooldown"></div>
+  </div>
+
+  <div class="card">
+    <div class="name">Hannah</div>
+    <button onclick="vote('Hannah', this)">Vote</button>
+    <div class="cooldown"></div>
+  </div>
+
+</div>
+
+<script>
+// hidden vote storage (NOT shown on page)
+let votes = {
+  Demy: 0,
+  Keishana: 0,
+  Hannah: 0
+};
+
+let cooldowns = {};
+
+// vote function
+function vote(name, button) {
+
+  if (cooldowns[name]) return;
+
+  votes[name]++;
+
+  console.log("VOTES:", votes); // only YOU can see this in console
+
+  button.disabled = true;
+
+  let timeLeft = 5;
+  let cooldownText = button.nextElementSibling;
+
+  cooldownText.innerText = `Wait ${timeLeft}s...`;
+
+  cooldowns[name] = setInterval(() => {
+    timeLeft--;
+    cooldownText.innerText = `Wait ${timeLeft}s...`;
+
+    if (timeLeft <= 0) {
+      clearInterval(cooldowns[name]);
+      cooldowns[name] = null;
+      button.disabled = false;
+      cooldownText.innerText = "";
+    }
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
